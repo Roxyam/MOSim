@@ -149,7 +149,7 @@ sc_param_estimation <- function(omics, cellTypes, diffGenes = list(c(0.2, 0.2)),
          all or only provide cell numbers")
     
   }
-  
+
   N_omics <- length(omics)
   
   ## Make association dataframe
@@ -409,6 +409,13 @@ sc_mosim <- function(omics, cellTypes, numberReps = 1, numberGroups = 1,
       stop(paste0("Number of elements in diffGenes must have a length equal to",
                   " numberGroups -1"))
     }
+  }
+  
+  # Check the number of feature (feature_no) 
+  if((feature_no > min(sapply(omicsList, nrow)))){
+    stop("The number of features to be distributed between the coexpression 
+         clusters cannotexceed half the number of features contained within 
+         any omics.")
   }
   
   ## Check that columns of association list are c("Peak_ID", "Gene_ID")
